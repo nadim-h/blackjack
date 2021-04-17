@@ -1,29 +1,52 @@
 #pragma once
 #include "card.hpp"
 #include <vector>
+#include <string>
+
+
+enum class Status {
+    begin,BLACKJACK=begin, OVERDRAWN, ACTIVE,end   
+};
+
 
 class Player{
 
     private:
-
+        double money;
         int score;
-        double bets;
+        int aces;
+        double bet;
+        Status status;
         std::vector<Card> hand;
 
     public:
 
-        Player();
+        Player(double money);
         
         double get_bet() const;
 
-        void modify_bet(double money);
+        void set_bet(double bet);
 
+        void add_card(Card c);
 
-        void give_card(Card c);
-
-        int get_score() const;
+        double get_score() const;
 
         void add_score(int s);
 
+        double get_money() const;
+
+        void discard_cards();
+
         std::vector<Card> get_hand() const;
+
+        void modify_money(double money);
+
+        bool has_ace();
+        void dec_ace();
+
+        void print_hand();
+
+        void get_status();
+
+        void set_status(Status status);
 };
