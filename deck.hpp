@@ -7,14 +7,13 @@
 class Deck{
 
 private:
-
-    std::vector<Card> deck;
     int i;
-    void pop_deck(int decks);
+    std::vector<Card> deck;
+    void populate_deck(int decks);
+    std::default_random_engine rng{std::random_device{}()};
 
 public:
-
-    Deck(int decks = 1);
+    Deck(int n_decks);
 
     void reset_deck();
 

@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 
 enum class Rank {
     begin=2,TWO=begin,THREE,FOUR,FIVE,
@@ -19,7 +21,9 @@ class Card {
     private:
         Suit suit;
         Rank rank;
+        int value;
 
+        int rank_value();
         std::string suit_string();
         std::string rank_string();
     
@@ -27,7 +31,7 @@ class Card {
         Card(Suit s, Rank r);
         Suit get_suit();
         Rank get_rank();
-
+        int get_value();
         std::string card_string();
 
 };

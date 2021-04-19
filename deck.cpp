@@ -1,6 +1,6 @@
 #include "deck.hpp"
 
-void Deck::pop_deck(int decks) {
+void Deck::populate_deck(int decks) {
 
     for (int i = 0; i < decks; i++){
         for (Suit s = Suit::begin; s != Suit::end; ++s) {
@@ -12,9 +12,10 @@ void Deck::pop_deck(int decks) {
 
 }
 
-Deck::Deck(int decks) {
+Deck::Deck(int n_decks) {
     i = 0;
-    pop_deck(decks);
+    populate_deck(n_decks);
+    shuffle_deck();
 }
 
 void Deck::reset_deck() {
@@ -23,7 +24,7 @@ void Deck::reset_deck() {
 }
 
 void Deck::shuffle_deck() {
-    std::shuffle(std::begin(deck) + i, std::end(deck), std::default_random_engine());
+    std::shuffle(std::begin(deck) + i, std::end(deck), rng);
 }
 
 Card Deck::draw_card() {

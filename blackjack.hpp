@@ -1,41 +1,34 @@
 #pragma once
 #include "player.hpp"
 #include "deck.hpp"
+#include "dealer.hpp"
 #include <iostream>
+#include <vector>
 
 
 class BlackJack{
     private:
-        const double BLACKJACK;
-        const double WIN;
-        const double TIE;
-        const double LOSS;
+        // game rule constants
+        const int GOAL = 21;
+        const int CUTOFF = 17;
+        const double BLACKJACK = 2.5;
+        const double WIN = 2;
+        const double TIE = 0;
+        const double LOSS = -1;
         
-        Player dealer;
+        Dealer dealer;
         Player player;
-
         Deck deck;
-        int score_card(Card c);
-        void hit(Player p);
+
+        void get_thecash(double factor);
 
     public:
-        BlackJack(Player p, int decks, double BLACKJACK, double WIN, double TIE, double LOSS);    
+        BlackJack(Player p, int n_decks);    
 
         void place_bet(double money);
 
-        void dealer_hit();
-        void player_hit();
         void init_deal();
-
-        void player_loop();
-        void dealer_loop();
-
+        void start_dealing();
         void conclusion();
-
-        void player_blackjack();
-        void player_win();
-        void tie();
-        void player_lose();
-
         void reset_state();
 };

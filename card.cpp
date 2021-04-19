@@ -1,28 +1,41 @@
 #include "card.hpp"
-#include <iostream>
-#include <string>
 
-Card::Card(Suit s, Rank r){
-    suit = s;
-    rank = r;
+Rank& operator ++(Rank& e){
+    e = Rank(int(e) + 1);
+    return e;
 }
 
-Suit Card::get_suit(){
-    return suit;
+Suit& operator ++(Suit& e){
+    e = Suit(int(e) + 1);
+    return e;
 }
 
+
+
+int Card::rank_value() {
+    int score = static_cast<int>(rank);
+
+    if( rank == Rank::ACE){
+        score = 11; 
+    }
+    else if(score > 10) {
+        score = 10;
+    }
+
+    return score;
+}
 
 std::string Card::suit_string(){
     
     std::string s;
     switch (suit){
-    case Suit::SPADE:
+    case Suit::SPADES:
         s = "spades";
         break;
-    case Suit::HEART:
+    case Suit::HEARTS:
         s = "hearts";
         break;
-    case Suit::DIAMOND:
+    case Suit::DIAMONDS:
         s = "diamonds";
         break;
     case Suit::CLUBS:
@@ -40,7 +53,7 @@ std::string Card::suit_string(){
 std::string Card::rank_string(){
     std::string s;
     
-    switch (suit){
+    switch (rank){
     case Rank::KING:
         s = "king";
         break;
@@ -54,7 +67,8 @@ std::string Card::rank_string(){
         s = "ace";
         break;
     default:
-        s = std::stoi(suit);
+        int tmp = static_cast<int>(rank);
+        s = std::to_string(tmp);
         break;
     }
 
@@ -66,16 +80,21 @@ std::string Card::card_string(){
     return s;
 }
 
+Card::Card(Suit s, Rank r){
+    suit = s;
+    rank = r;
+    value = rank_value();
+}
+
+Suit Card::get_suit(){
+    return suit;
+}
+
 Rank Card::get_rank(){
     return rank;
 }
 
-Rank& operator ++(Rank& e){
-    e = Rank(int(e) + 1);
-    return e;
+int Card::get_value(){
+    return value;
 }
 
-Suit& operator ++(Suit& e){
-    e = Suit(int(e) + 1);
-    return e;
-}
