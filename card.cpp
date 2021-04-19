@@ -42,7 +42,7 @@ std::string Card::suit_string(){
         s = "clubs";
         break;
     default:
-        s = "fel, kasta exception lr nåt";
+        throw std::domain_error{"Illegal suit value in suit_string function"};
         break;
     }
 
@@ -68,6 +68,9 @@ std::string Card::rank_string(){
         break;
     default:
         int tmp = static_cast<int>(rank);
+        if(tmp <2 || tmp>11){
+            throw std::domain_error{"Illegal rank value in rank_string function"};
+        }
         s = std::to_string(tmp);
         break;
     }

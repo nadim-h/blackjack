@@ -100,6 +100,10 @@ void Player::player_turn(Deck &deck, int GOAL){
             std::cout << name << " hit" << std::endl;
             hit(deck);
         }
+        else{
+            throw std::invalid_argument( "Recieved invalid argument "
+                + std::to_string(inp) +" in player_turn by player " + name );
+        }
     }
     std::cout << "*****************************************" << std::endl << std::endl;
 }

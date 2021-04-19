@@ -13,6 +13,11 @@ void Deck::populate_deck(int decks) {
 }
 
 Deck::Deck(int n_decks) {
+    if(n_decks < 1){
+        throw std::invalid_argument{"Number of decks must be greater than 0, was set to " 
+            + std::to_string(n_decks)};
+    }
+
     i = 0;
     populate_deck(n_decks);
     shuffle_deck();
