@@ -9,18 +9,21 @@ class Player{
 
     protected:
 
-        double money = 100;
-        double bet = 0;
-        int score = 0;
-        int aces = 0;
+        double money;
+        double bet;
+        int score;
+        int aces;
 
+        std::string name;
         
         void add_card(Card c);
         std::vector<Card> hand;
 
     public:
 
-        Player(double money);
+        Player(double money = 0, std::string name = "dealer");
+
+        std::string get_name() const;
 
         double get_bet() const;
         void set_bet(double bet);

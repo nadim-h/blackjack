@@ -1,7 +1,14 @@
 #include "player.hpp"
 
-Player::Player(double money){
+Player::Player(double money, std::string name) : name(name){
     this->money = money;
+    aces = 0;
+    bet = 0;
+    score = 0;
+}
+
+std::string Player::get_name() const{
+    return name;
 }
 
 double Player::get_bet() const {
@@ -65,20 +72,20 @@ void Player::player_turn(Deck &deck, int GOAL){
     char inp;
     while(true){
         std::cout << "----------------------------------" << std::endl;
-        std::cout << "Players hand is:" << std::endl;
+        std::cout << name << " hand is:" << std::endl;
         print_hand();   
-        std::cout << "Players; score: "      << score
+        std::cout << name << "; score: "      << score
                   << ", bet: "      << bet
                   << ", money: "    << money 
                   << std::endl << std::endl;
         
         
         if(score>GOAL) {
-            std::cout << "Player bust" << std::endl;
+            std::cout << name << " bust" << std::endl;
             break;
         }
         else if(score == GOAL){
-            std::cout << "Player got blackjack" << std::endl;
+            std::cout << name << " got blackjack" << std::endl;
             break;
         }
         
@@ -86,11 +93,11 @@ void Player::player_turn(Deck &deck, int GOAL){
         std::cin >> std::ws >> inp;
         
         if(inp == 's'){ 
-            std::cout << "Player stopped" << std::endl;
+            std::cout << name << " stopped" << std::endl;
             break;
         }
         else if (inp == 'h'){
-            std::cout << "Player hit" << std::endl;
+            std::cout << name << " hit" << std::endl;
             hit(deck);
         }
     }

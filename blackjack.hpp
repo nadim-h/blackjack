@@ -17,15 +17,15 @@ class BlackJack{
         const double LOSS = -1;
         
         Dealer dealer;
-        Player player;
+        std::vector<Player> players;
         Deck deck;
 
-        void get_thecash(double factor);
+        void get_thecash(double factor, Player player);
 
     public:
-        BlackJack(Player p, int n_decks);    
+        BlackJack(std::vector<Player> p, int n_decks);    
 
-        void place_bet(double money);
+        void place_bets();
 
         void init_deal();
         void start_dealing();

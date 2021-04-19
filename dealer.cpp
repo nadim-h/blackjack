@@ -1,6 +1,5 @@
 #include "dealer.hpp"
 
-Dealer::Dealer() : Player::Player(0){}
 
 void Dealer::player_turn (Deck &deck,int GOAL, int CUTOFF) {
     std::cout << "**********Dealer loop starting*************" << std::endl;
