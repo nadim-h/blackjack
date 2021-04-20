@@ -1,6 +1,6 @@
 #include "blackjack.hpp"
 
-void BlackJack::get_thecash(double factor,Player player){
+void BlackJack::get_thecash(double factor,Player &player){
     std::cout << "*************results************" << std::endl;
 
 
@@ -16,27 +16,34 @@ void BlackJack::get_thecash(double factor,Player player){
     std::cout << std::endl;
 }
 
-BlackJack::BlackJack(int n_decks) 
-    : dealer(Dealer()), deck(Deck(n_decks)){
-        std::cout << "xxxxxxxxxxxxxx Blackjack xxxxxxxxxxxxxx" <<std::endl;
-    }
 
-void BlackJack::set_players(){
+Deck BlackJack::set_deck(){
+    std::cout << "Enter deck size; has to be greater than 0" << std::endl;
+    int n_decks;
+    std::cin >> std::ws >> n_decks;
+    if(n_decks < 1){
+        throw std::invalid_argument{"Set deck size less than 1"};
+    }
+    return Deck(n_decks);
+}
+
+std::vector<Player> BlackJack::set_players(){
     std::cout << "Set players"<< std::endl;
     double money;
     char inp;
     std::string name;
+    std::vector<Player> ps;
     while(true){
         std::cout << "Set new player name:" << std::endl;
         std::cin >> std::ws >> name;
         std::cout << "Set "<< name << " starting bank" << std::endl;
         std::cin >> std::ws >> money;
         Player p = Player(money,name);
-        players.push_back(p);
+        ps.push_back(p);
 
-        std::cout << "Continue 'c' or 'm' for more players" << std::endl;
+        std::cout << "No more players 'n' or 'm' for more players" << std::endl;
         std::cin >> std::ws >> inp;
-        if(inp == 'c'){
+        if(inp == 'n'){
             break;
         }
         else if(inp == 'm'){
@@ -47,7 +54,13 @@ void BlackJack::set_players(){
             + std::to_string(inp) +" in set_players" );
         }
     }
+    return ps;
 }
+
+BlackJack::BlackJack() 
+    : dealer(Dealer()), players(set_players()), deck(set_deck()){
+        std::cout << "xxxxxxxxxxxxxx Blackjack xxxxxxxxxxxxxx" <<std::endl;
+    }
 
 void BlackJack::place_bets(){
     double bet;
@@ -56,23 +69,22 @@ void BlackJack::place_bets(){
                   << players[i].get_name() 
                   << ", bank is: " << players[i].get_money() 
                   << " or input -1 to walk away"<< std::endl;
-        while(true){
-            std::cin >> std::ws >> bet;
-            if(bet == -1){
-                std::cout << "Player " << players[i].get_name() << " has exited" << std::endl;
-                players.erase(players.begin() + i);
-                break;
-            }
-            else if(bet > players[i].get_money()){
-                throw std::invalid_argument( players[i].get_name() 
-                    + " tried to bet with "
-                    + std::to_string(bet) + " while available money is "
-                    + std::to_string(players[i].get_money()));
-            }
-            else {
-                std::cout << "Player " << players[i].get_name() << " has bet" << bet << std::endl;
-                players[i].set_bet(bet);
-            }
+        
+        std::cin >> std::ws >> bet;
+        if(bet == -1){
+            std::cout << "Player " << players[i].get_name() << " has exited" << std::endl;
+            players.erase(players.begin() + i);
+            break;
+        }
+        else if(bet > players[i].get_money()){
+            throw std::invalid_argument( players[i].get_name() 
+                + " tried to bet with "
+                + std::to_string(bet) + " while available money is "
+                + std::to_string(players[i].get_money()));
+        }
+        else {
+            std::cout << "Player " << players[i].get_name() << " has bet" << bet << std::endl;
+            players[i].set_bet(bet);
         }
     }
 }
@@ -152,7 +164,7 @@ bool BlackJack::another_round(){
     char inp;
     std::cout << "Bet again? yes (y) or no (any key)" << std::endl;
     std::cin >> std::ws >> inp;
-    return (inp == 'y');
+    return (inp != 'y');
 }
 
 void BlackJack::reset_state(){

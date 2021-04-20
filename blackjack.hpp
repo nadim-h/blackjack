@@ -20,12 +20,14 @@ class BlackJack{
         std::vector<Player> players;
         Deck deck;
 
-        void get_thecash(double factor, Player player);
+        void get_thecash(double factor, Player &player);
+        std::vector<Player> set_players();
+        Deck set_deck();
 
     public:
-        BlackJack(int n_decks);    
 
-        void set_players();
+        BlackJack();
+
         void place_bets();
 
         void init_deal();

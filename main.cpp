@@ -3,14 +3,12 @@
 
 
 int main(){
-    const int N_DECKS = 1;
     try{
 
-        BlackJack b = BlackJack(N_DECKS);
+        BlackJack b = BlackJack();
 
         char inp;
         while(true){
-
             b.place_bets();
             b.init_deal();
             b.start_dealing();
